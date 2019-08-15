@@ -2,9 +2,9 @@
 Simple development of multi-version api based on spring-mvc annotation via @ApiVersion, support for uri, header, param.
 
 ## Future
-- URI: 请求/v1/user/list, /v2/user/list
-- Header: 请求/user/list, 携带请求头: X-API-VERSION=1
-- Param:  请求/user/list?api_version=1
+- URI:  /v1/user/list, /v2/user/list
+- Header: /user/list, header: X-API-VERSION=1
+- Param:  /user/list?api_version=1
 
 ## Quick
 1. Add Dependency(Maven)
@@ -21,11 +21,9 @@ Simple development of multi-version api based on spring-mvc annotation via @ApiV
         @SpringBootApplication
         @EnableApiVersioning
         public class Application {
-        
             public static void main(String[] args) {
                 SpringApplication.run(Application.class, args);
             }
-        
         }
     ```
 
@@ -48,14 +46,21 @@ Simple development of multi-version api based on spring-mvc annotation via @ApiV
             }
         }
     ```
-    
-## Config(application.properties)
+4. Test
+    ```
+        curl http://127.0.0.1:8080/v1/user/list
+        curl http://127.0.0.1:8080/v2/user/list
+    ```
+
+
+## Config properties
 ```
-    api.version.type=uri                # 多版本控制实现方式: uri(默认), header, param
+    api.version.type=uri                # 多版本控制实现方式: uri(default), header, param
     api.version.uri-prefix=             # URI前缀, 比如可添加/api, 请求地址: /api/v1/... /api/v2/...
     api.version.header=X-API-VERSION    # 版本请求头名称
     api.version.param=api_version       # 版本参数名
 ```
 
-## 参考
-- https://www.jianshu.com/p/2c43d15b1675
+## Reference
+- [如何优雅的设计 Spring Boot API 接口版本号](https://www.jianshu.com/p/2c43d15b1675)
+- [springmvc实现restful api版本控制并兼容swagger](https://luoluonuoya.github.io/2017/11/10/springmvc实现restful%20api版本控制并兼容swagger/)
