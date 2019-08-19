@@ -12,7 +12,7 @@ Simple development of multi-version api based on spring-mvc annotation via @ApiV
        <dependency>
            <groupId>com.github.lkqm</groupId>
            <artifactId>spring-api-versioning</artifactId>
-           <version>1.0.0-SNAPSHOT</version>
+           <version>1.0.0</version>
        </dependency>
     ```
     
