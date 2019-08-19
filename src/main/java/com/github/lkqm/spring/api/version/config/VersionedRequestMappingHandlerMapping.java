@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
-import java.util.Objects;
 
 @Slf4j
 @AllArgsConstructor
@@ -42,9 +40,7 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
     }
 
     private RequestCondition<ApiVersionRequestCondition> createRequestCondition(ApiVersion apiVersion) {
-        if (Objects.isNull(apiVersion)) {
-            return null;
-        }
+        if (apiVersion == null) return null;
         int value = apiVersion.value();
         Assert.isTrue(value >= 1, "Api Version Must be greater than or equal to 1");
         return new ApiVersionRequestCondition(value, apiVersionProperties);
@@ -68,7 +64,7 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
                 }
                 if (apiVersion != null) {
                     String prefix = "/v" + apiVersion.value();
-                    if(!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
+                    if (!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
                         prefix = apiVersionProperties.getUriPrefix().trim() + prefix;
                     }
                     info = RequestMappingInfo.paths(new String[]{prefix}).build().combine(info);

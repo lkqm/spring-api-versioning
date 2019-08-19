@@ -1,6 +1,8 @@
 # spring-api-versioning
 Simple development of multi-version api based on spring-mvc annotation via @ApiVersion, support for uri, header, param.
 
+支持版本: JDK 1.7, spring-boot 1.5.x+, spring-mvc
+
 ## Future
 - URI:  /v1/user/list, /v2/user/list
 - Header: /user/list, header: X-API-VERSION=1
@@ -12,7 +14,7 @@ Simple development of multi-version api based on spring-mvc annotation via @ApiV
        <dependency>
            <groupId>com.github.lkqm</groupId>
            <artifactId>spring-api-versioning</artifactId>
-           <version>1.0.0</version>
+           <version>1.0.1-SNAPSHOT</version>
        </dependency>
     ```
     

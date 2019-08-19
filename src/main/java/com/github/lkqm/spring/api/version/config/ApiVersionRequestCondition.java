@@ -56,4 +56,8 @@ public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRe
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "@ApiVersion(" + apiVersion + ")";
+    }
 }
