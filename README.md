@@ -14,7 +14,7 @@ Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x, spring-mvc(untested)
        <dependency>
            <groupId>com.github.lkqm</groupId>
            <artifactId>spring-api-versioning</artifactId>
-           <version>1.0.1-SNAPSHOT</version>
+           <version>1.0.0</version>
        </dependency>
     ```
     
