@@ -1,7 +1,7 @@
 # spring-api-versioning
-Simple development of multi-version api based on spring-mvc annotation via @ApiVersion, support for uri, header, param.
+Simple development of multi-version api based on spring-mvc via @ApiVersion annotation, support for uri, header, param.
 
-支持版本: JDK 1.7, spring-boot 1.5.x+, spring-mvc
+Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x, spring-mvc(untested)
 
 ## Future
 - URI:  /v1/user/list, /v2/user/list
