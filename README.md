@@ -1,4 +1,7 @@
 # spring-api-versioning
+![Maven Central](https://img.shields.io/maven-central/v/com.github.lkqm/spring-api-versioning)
+![Travis (.org) branch](https://img.shields.io/travis/lkqm/spring-api-versioning/master)
+
 Simple development of multi-version api based on spring-mvc via @ApiVersion annotation, support for uri, header, param.
 
 Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x, spring-mvc(untested)
