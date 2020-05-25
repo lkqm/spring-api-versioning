@@ -1,6 +1,5 @@
-package com.github.lkqm.spring.api.version.config;
+package com.github.lkqm.spring.api.version;
 
-import com.github.lkqm.spring.api.version.ApiVersionProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
@@ -20,19 +19,22 @@ public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRe
     private final static Pattern VERSION_PREFIX_PATTERN = Pattern.compile("/v(\\d+)/");
 
     private int apiVersion;
-    private ApiVersionProperties apiVersionProperties;
+    private ApiVersionConfig apiVersionConfig;
 
+    @Override
     public ApiVersionRequestCondition combine(ApiVersionRequestCondition other) {
         // 方法级别注解优先
-        return new ApiVersionRequestCondition(other.getApiVersion(), other.getApiVersionProperties());
+        return new ApiVersionRequestCondition(other.getApiVersion(), other.getApiVersionConfig());
     }
 
+    @Override
     public int compareTo(ApiVersionRequestCondition other, HttpServletRequest request) {
         return other.getApiVersion() - getApiVersion();
     }
 
+    @Override
     public ApiVersionRequestCondition getMatchingCondition(HttpServletRequest request) {
-        ApiVersionProperties.Type type = apiVersionProperties.getType();
+        ApiVersionConfig.Type type = apiVersionConfig.getType();
         String version = null;
         switch (type) {
             case URI:
@@ -40,10 +42,10 @@ public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRe
                 if (m.find()) version = m.group(1);
                 break;
             case HEADER:
-                version = request.getHeader(apiVersionProperties.getHeader());
+                version = request.getHeader(apiVersionConfig.getHeader());
                 break;
             case PARAM:
-                version = request.getParameter(apiVersionProperties.getParam());
+                version = request.getParameter(apiVersionConfig.getParam());
                 break;
         }
         if (StringUtils.isEmpty(version)) return null;

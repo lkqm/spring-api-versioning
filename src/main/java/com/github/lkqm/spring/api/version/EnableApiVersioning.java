@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * 开启多版本API控制
  *
- * @see ApiVersionProperties 配置属性
+ * @see ApiVersionConfig 配置属性
  * @see ApiVersionConfiguration 配置类
  */
 @Target(ElementType.TYPE)

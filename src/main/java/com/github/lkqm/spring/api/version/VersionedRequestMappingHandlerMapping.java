@@ -1,7 +1,5 @@
-package com.github.lkqm.spring.api.version.config;
+package com.github.lkqm.spring.api.version;
 
-import com.github.lkqm.spring.api.version.ApiVersion;
-import com.github.lkqm.spring.api.version.ApiVersionProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -23,7 +21,7 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
     /**
      * 多版本配置属性
      */
-    private ApiVersionProperties apiVersionProperties;
+    private ApiVersionConfig apiVersionConfig;
 
     @Override
     protected RequestCondition<?> getCustomTypeCondition(Class<?> handlerType) {
@@ -43,7 +41,7 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
         if (apiVersion == null) return null;
         int value = apiVersion.value();
         Assert.isTrue(value >= 1, "Api Version Must be greater than or equal to 1");
-        return new ApiVersionRequestCondition(value, apiVersionProperties);
+        return new ApiVersionRequestCondition(value, apiVersionConfig);
     }
 
     //--------------------- 动态注册URI -----------------------//
@@ -57,15 +55,15 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
             }
 
             // 指定URL前缀
-            if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) {
+            if (apiVersionConfig.getType() == ApiVersionConfig.Type.URI) {
                 ApiVersion apiVersion = AnnotationUtils.getAnnotation(method, ApiVersion.class);
                 if (apiVersion == null) {
                     apiVersion = AnnotationUtils.getAnnotation(handlerType, ApiVersion.class);
                 }
                 if (apiVersion != null) {
                     String prefix = "/v" + apiVersion.value();
-                    if (!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
-                        prefix = apiVersionProperties.getUriPrefix().trim() + prefix;
+                    if (!StringUtils.isEmpty(apiVersionConfig.getUriPrefix())) {
+                        prefix = apiVersionConfig.getUriPrefix().trim() + prefix;
                     }
                     info = RequestMappingInfo.paths(new String[]{prefix}).build().combine(info);
                 }
@@ -80,6 +78,5 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
         RequestCondition<?> condition = element instanceof Class ? this.getCustomTypeCondition((Class) element) : this.getCustomMethodCondition((Method) element);
         return requestMapping != null ? this.createRequestMappingInfo(requestMapping, condition) : null;
     }
-
 
 }

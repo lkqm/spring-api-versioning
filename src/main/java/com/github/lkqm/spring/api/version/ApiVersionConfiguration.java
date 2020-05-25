@@ -1,12 +1,18 @@
 package com.github.lkqm.spring.api.version;
 
-import com.github.lkqm.spring.api.version.config.WebMvcConfig;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  * 配置api版本
  */
 @Configuration
-@Import(WebMvcConfig.class)
-public class ApiVersionConfiguration { }
+public class ApiVersionConfiguration extends ApiVersionWebMvcConfigurationSupport {
+
+    @Bean
+    @ConfigurationProperties("api.version")
+    public ApiVersionConfig apiVersionConfig() {
+        return new ApiVersionConfig();
+    }
+}

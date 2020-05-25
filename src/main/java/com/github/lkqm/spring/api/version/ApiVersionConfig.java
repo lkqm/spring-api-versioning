@@ -1,7 +1,6 @@
 package com.github.lkqm.spring.api.version;
 
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
 
@@ -9,8 +8,7 @@ import java.io.Serializable;
  * Api-Version配置
  */
 @Data
-@ConfigurationProperties("api.version")
-public class ApiVersionProperties implements Serializable {
+public class ApiVersionConfig implements Serializable {
 
     /**
      * 实现多版本的方式
