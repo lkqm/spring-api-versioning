@@ -5,7 +5,7 @@
 
     <groupId>com.github.lkqm</groupId>
     <artifactId>spring-api-versioning</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
     <description>Simple development of multi-version api based on spring-mvc via @ApiVersion annotation, support for
