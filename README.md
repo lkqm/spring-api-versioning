@@ -40,14 +40,14 @@ Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x, spring-mvc(untested)
         public class UserController {
         
             @GetMapping("/list")
-            public String list() {
-                return "list";
+            public String listV1() {
+                return "list v1";
             }
         
             @GetMapping("/list")
             @ApiVersion(2)
-            public String list2() {
-                return "list2";
+            public String listV2() {
+                return "list v2";
             }
         }
     ```
