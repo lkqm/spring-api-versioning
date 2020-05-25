@@ -1,6 +1,8 @@
 package com.github.lkqm.spring.api.version;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -8,14 +10,16 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 /**
  * 支持多版本api的WebMvcConfigurationSupport
  */
+@Configuration
 @AllArgsConstructor
-public abstract class ApiVersionWebMvcConfigurationSupport extends WebMvcConfigurationSupport {
+public class ApiVersionWebMvcConfiguration extends WebMvcConfigurationSupport {
 
-    public abstract ApiVersionConfig apiVersionConfig();
+    @NonNull
+    private ApiVersionConfig apiVersionConfig;
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-        return new VersionedRequestMappingHandlerMapping(apiVersionConfig());
+        return new VersionedRequestMappingHandlerMapping(apiVersionConfig);
     }
 
     @Override
