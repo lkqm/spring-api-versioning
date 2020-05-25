@@ -11,13 +11,15 @@ Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x, spring-mvc(untested)
 - Header: /user/list, header: X-API-VERSION=1
 - Param:  /user/list?api_version=1
 
+Important: version number use precise matching with String equals method.
+
 ## Quick
 1. Add Dependency(Maven)
     ```
        <dependency>
            <groupId>com.github.lkqm</groupId>
            <artifactId>spring-api-versioning</artifactId>
-           <version>1.0.0</version>
+           <version>${version}</version>
        </dependency>
     ```
     
@@ -36,25 +38,25 @@ Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x, spring-mvc(untested)
     ```
         @RestController
         @RequestMapping("/user")
-        @ApiVersion
+        @ApiVersion("1")
         public class UserController {
         
             @GetMapping("/list")
-            public String listV1() {
-                return "list v1";
+            public String list1() {
+                return "list1";
             }
         
             @GetMapping("/list")
-            @ApiVersion(2)
-            public String listV2() {
-                return "list v2";
+            @ApiVersion("1.1)
+            public String list2() {
+                return "list2";
             }
         }
     ```
 4. Test
     ```
         curl http://127.0.0.1:8080/v1/user/list
-        curl http://127.0.0.1:8080/v2/user/list
+        curl http://127.0.0.1:8080/v1.1/user/list
     ```
 
 

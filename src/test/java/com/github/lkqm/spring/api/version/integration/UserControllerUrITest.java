@@ -28,14 +28,14 @@ public class UserControllerUrITest {
     public void listV1() throws Exception {
         mockMvc.perform(get("/api/v1/user/list"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("list v1"));
+                .andExpect(content().string("list1"));
     }
 
     @Test
     public void listV2() throws Exception {
-        mockMvc.perform(get("/api/v2/user/list"))
+        mockMvc.perform(get("/api/v1.1/user/list"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("list v2"));
+                .andExpect(content().string("list2"));
     }
 
 }

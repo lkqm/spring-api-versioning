@@ -28,14 +28,14 @@ public class UserControllerParamTest {
     public void listV1() throws Exception {
         mockMvc.perform(get("/user/list").param("api_version", "1"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("list v1"));
+                .andExpect(content().string("list1"));
     }
 
     @Test
     public void listV2() throws Exception {
-        mockMvc.perform(get("/user/list").param("api_version", "2"))
+        mockMvc.perform(get("/user/list").param("api_version", "1.1"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("list v2"));
+                .andExpect(content().string("list2"));
     }
 
 }

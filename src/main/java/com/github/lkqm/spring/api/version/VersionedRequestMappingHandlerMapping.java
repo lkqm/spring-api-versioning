@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.condition.RequestCondition;
@@ -25,23 +24,26 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
 
     @Override
     protected RequestCondition<?> getCustomTypeCondition(Class<?> handlerType) {
-        // 扫描类上的 @ApiVersion
+        if (apiVersionConfig.getType() == ApiVersionConfig.Type.URI) return null;
+
         ApiVersion apiVersion = AnnotationUtils.findAnnotation(handlerType, ApiVersion.class);
-        return createRequestCondition(apiVersion);
+        return createRequestCondition(apiVersion, handlerType);
     }
 
     @Override
     protected RequestCondition<?> getCustomMethodCondition(Method method) {
-        // 扫描方法上的 @ApiVersion
+        if (apiVersionConfig.getType() == ApiVersionConfig.Type.URI) return null;
+
         ApiVersion apiVersion = AnnotationUtils.findAnnotation(method, ApiVersion.class);
-        return createRequestCondition(apiVersion);
+        return createRequestCondition(apiVersion, method);
     }
 
-    private RequestCondition<ApiVersionRequestCondition> createRequestCondition(ApiVersion apiVersion) {
+    private RequestCondition<ApiVersionRequestCondition> createRequestCondition(ApiVersion apiVersion, Object target) {
         if (apiVersion == null) return null;
-        int value = apiVersion.value();
-        Assert.isTrue(value >= 1, "Api Version Must be greater than or equal to 1");
-        return new ApiVersionRequestCondition(value, apiVersionConfig);
+        String version = apiVersion.value().trim();
+
+        Utils.checkVersionNumber(version, target);
+        return new ApiVersionRequestCondition(version, apiVersionConfig);
     }
 
     //--------------------- 动态注册URI -----------------------//
@@ -61,7 +63,10 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
                     apiVersion = AnnotationUtils.getAnnotation(handlerType, ApiVersion.class);
                 }
                 if (apiVersion != null) {
-                    String prefix = "/v" + apiVersion.value();
+                    String version = apiVersion.value().trim();
+                    Utils.checkVersionNumber(version, method);
+
+                    String prefix = "/v" + version;
                     if (!StringUtils.isEmpty(apiVersionConfig.getUriPrefix())) {
                         prefix = apiVersionConfig.getUriPrefix().trim() + prefix;
                     }

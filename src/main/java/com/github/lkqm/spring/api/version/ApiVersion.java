@@ -15,6 +15,6 @@ public @interface ApiVersion {
     /**
      * 版本号
      */
-    int value() default 1;
+    String value();
 
 }
