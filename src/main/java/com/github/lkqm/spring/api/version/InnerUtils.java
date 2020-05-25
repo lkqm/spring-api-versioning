@@ -2,7 +2,7 @@ package com.github.lkqm.spring.api.version;
 
 import java.util.regex.Pattern;
 
-class Utils {
+class InnerUtils {
 
     private final static Pattern VERSION_NUMBER_PATTERN = Pattern.compile("^\\d+(\\.\\d+){0,2}$");
 

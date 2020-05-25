@@ -20,11 +20,11 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
     /**
      * 多版本配置属性
      */
-    private ApiVersionConfig apiVersionConfig;
+    private ApiVersionProperties apiVersionProperties;
 
     @Override
     protected RequestCondition<?> getCustomTypeCondition(Class<?> handlerType) {
-        if (apiVersionConfig.getType() == ApiVersionConfig.Type.URI) return null;
+        if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) return null;
 
         ApiVersion apiVersion = AnnotationUtils.findAnnotation(handlerType, ApiVersion.class);
         return createRequestCondition(apiVersion, handlerType);
@@ -32,7 +32,7 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
 
     @Override
     protected RequestCondition<?> getCustomMethodCondition(Method method) {
-        if (apiVersionConfig.getType() == ApiVersionConfig.Type.URI) return null;
+        if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) return null;
 
         ApiVersion apiVersion = AnnotationUtils.findAnnotation(method, ApiVersion.class);
         return createRequestCondition(apiVersion, method);
@@ -42,8 +42,8 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
         if (apiVersion == null) return null;
         String version = apiVersion.value().trim();
 
-        Utils.checkVersionNumber(version, target);
-        return new ApiVersionRequestCondition(version, apiVersionConfig);
+        InnerUtils.checkVersionNumber(version, target);
+        return new ApiVersionRequestCondition(version, apiVersionProperties);
     }
 
     //--------------------- 动态注册URI -----------------------//
@@ -57,18 +57,18 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
             }
 
             // 指定URL前缀
-            if (apiVersionConfig.getType() == ApiVersionConfig.Type.URI) {
+            if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) {
                 ApiVersion apiVersion = AnnotationUtils.getAnnotation(method, ApiVersion.class);
                 if (apiVersion == null) {
                     apiVersion = AnnotationUtils.getAnnotation(handlerType, ApiVersion.class);
                 }
                 if (apiVersion != null) {
                     String version = apiVersion.value().trim();
-                    Utils.checkVersionNumber(version, method);
+                    InnerUtils.checkVersionNumber(version, method);
 
                     String prefix = "/v" + version;
-                    if (!StringUtils.isEmpty(apiVersionConfig.getUriPrefix())) {
-                        prefix = apiVersionConfig.getUriPrefix().trim() + prefix;
+                    if (!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
+                        prefix = apiVersionProperties.getUriPrefix().trim() + prefix;
                     }
                     info = RequestMappingInfo.paths(new String[]{prefix}).build().combine(info);
                 }

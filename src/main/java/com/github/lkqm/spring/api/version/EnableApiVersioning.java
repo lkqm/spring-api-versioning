@@ -10,11 +10,11 @@ import java.lang.annotation.Target;
 /**
  * 开启多版本API控制
  *
- * @see ApiVersionConfig 配置属性
- * @see ApiVersionConfiguration 配置类
+ * @see ApiVersionProperties 配置属性
+ * @see ApiVersionAutoConfiguration 配置类
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(ApiVersionConfiguration.class)
+@Import(ApiVersionAutoConfiguration.class)
 public @interface EnableApiVersioning {
 }

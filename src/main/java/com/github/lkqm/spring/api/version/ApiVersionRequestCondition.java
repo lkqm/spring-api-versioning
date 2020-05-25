@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRequestCondition> {
 
     private String apiVersion;
-    private ApiVersionConfig apiVersionConfig;
+    private ApiVersionProperties apiVersionProperties;
 
-    public ApiVersionRequestCondition(@NonNull String apiVersion, @NonNull ApiVersionConfig apiVersionConfig) {
+    public ApiVersionRequestCondition(@NonNull String apiVersion, @NonNull ApiVersionProperties apiVersionProperties) {
         this.apiVersion = apiVersion.trim();
-        this.apiVersionConfig = apiVersionConfig;
+        this.apiVersionProperties = apiVersionProperties;
     }
 
     @Override
     public ApiVersionRequestCondition combine(ApiVersionRequestCondition other) {
         // method annotation first
-        return new ApiVersionRequestCondition(other.getApiVersion(), other.getApiVersionConfig());
+        return new ApiVersionRequestCondition(other.getApiVersion(), other.getApiVersionProperties());
     }
 
     @Override
@@ -30,14 +30,14 @@ public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRe
 
     @Override
     public ApiVersionRequestCondition getMatchingCondition(HttpServletRequest request) {
-        ApiVersionConfig.Type type = apiVersionConfig.getType();
+        ApiVersionProperties.Type type = apiVersionProperties.getType();
         String version = null;
         switch (type) {
             case HEADER:
-                version = request.getHeader(apiVersionConfig.getHeader());
+                version = request.getHeader(apiVersionProperties.getHeader());
                 break;
             case PARAM:
-                version = request.getParameter(apiVersionConfig.getParam());
+                version = request.getParameter(apiVersionProperties.getParam());
                 break;
         }
         boolean match = version != null && version.length() > 0 && version.trim().equals(apiVersion);
