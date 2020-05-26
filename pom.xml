@@ -4,7 +4,7 @@
 
     <groupId>com.github.lkqm</groupId>
     <artifactId>spring-api-versioning</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.2.0</version>
 
     <name>${project.artifactId}</name>
     <description>Simple development of multi-version api based on spring-mvc via @ApiVersion annotation, support for
@@ -28,7 +28,7 @@
         <connection>scm:git:https://github.com/lkqm/spring-api-versioning.git</connection>
         <developerConnection>scm:git:git@github.com:lkqm/spring-api-versioning.git</developerConnection>
         <url>https://github.com/lkqm/spring-api-versioning</url>
-      <tag>HEAD</tag>
+      <tag>v1.2.0</tag>
   </scm>
 
     <properties>
