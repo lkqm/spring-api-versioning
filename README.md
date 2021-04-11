@@ -4,7 +4,7 @@
 
 Simple development of multi-version api based on spring-mvc via @ApiVersion annotation, support for uri, header, param.
 
-Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x
+Supports: JDK 1.8, spring-boot 2.x
 
 ## Features
 - URI:  /v1/user/list, /v2/user/list
