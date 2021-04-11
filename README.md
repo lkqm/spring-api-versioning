@@ -6,7 +6,7 @@ Simple development of multi-version api based on spring-mvc via @ApiVersion anno
 
 Supports: JDK 1.7, spring-boot 1.5.x, spring-boot 2.x
 
-## Future
+## Features
 - URI:  /v1/user/list, /v2/user/list
 - Header: /user/list, header: X-API-VERSION=1
 - Param:  /user/list?api_version=1
@@ -67,7 +67,3 @@ api.version.uri-prefix=             # uri prefix, if set /api, request uri like:
 api.version.header=X-API-VERSION    # version control http header name
 api.version.param=api_version       # version control http query string name
 ```
-
-## Reference
-- [如何优雅的设计 Spring Boot API 接口版本号](https://www.jianshu.com/p/2c43d15b1675)
-- [springmvc实现restful api版本控制并兼容swagger](https://luoluonuoya.github.io/2017/11/10/springmvc实现restful%20api版本控制并兼容swagger/)
