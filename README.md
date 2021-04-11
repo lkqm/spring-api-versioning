@@ -47,7 +47,7 @@ Important: version number use precise matching with String equals method.
         }
     
         @GetMapping("/list")
-        @ApiVersion("1.1)
+        @ApiVersion("1.1")
         public String list2() {
             return "list2";
         }
@@ -64,6 +64,7 @@ Important: version number use precise matching with String equals method.
 ```
 api.version.type=uri                # versioning implement way: uri(default), header, param
 api.version.uri-prefix=             # uri prefix, if set /api, request uri like: /api/v1/... /api/v2/...
+api.version.uri-location=           # uri version location: begin(/v1/user/list), end(/user/list/v1)
 api.version.header=X-API-VERSION    # version control http header name
 api.version.param=api_version       # version control http query string name
 ```

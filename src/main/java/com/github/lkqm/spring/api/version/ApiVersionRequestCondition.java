@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 @Getter
 public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRequestCondition> {
 
-    private String apiVersion;
-    private ApiVersionProperties apiVersionProperties;
+    private final String apiVersion;
+    private final ApiVersionProperties apiVersionProperties;
 
     public ApiVersionRequestCondition(@NonNull String apiVersion, @NonNull ApiVersionProperties apiVersionProperties) {
         this.apiVersion = apiVersion.trim();

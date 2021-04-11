@@ -24,24 +24,23 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
 
     @Override
     protected RequestCondition<?> getCustomTypeCondition(Class<?> handlerType) {
-        if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) return null;
-
-        ApiVersion apiVersion = AnnotationUtils.findAnnotation(handlerType, ApiVersion.class);
-        return createRequestCondition(apiVersion, handlerType);
+        return createRequestCondition(handlerType);
     }
 
     @Override
     protected RequestCondition<?> getCustomMethodCondition(Method method) {
-        if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) return null;
-
-        ApiVersion apiVersion = AnnotationUtils.findAnnotation(method, ApiVersion.class);
-        return createRequestCondition(apiVersion, method);
+        return createRequestCondition(method);
     }
 
-    private RequestCondition<ApiVersionRequestCondition> createRequestCondition(ApiVersion apiVersion, Object target) {
-        if (apiVersion == null) return null;
+    private RequestCondition<ApiVersionRequestCondition> createRequestCondition(AnnotatedElement target) {
+        if (apiVersionProperties.getType() == ApiVersionProperties.Type.URI) {
+            return null;
+        }
+        ApiVersion apiVersion = AnnotationUtils.findAnnotation(target, ApiVersion.class);
+        if (apiVersion == null) {
+            return null;
+        }
         String version = apiVersion.value().trim();
-
         InnerUtils.checkVersionNumber(version, target);
         return new ApiVersionRequestCondition(version, apiVersionProperties);
     }
@@ -67,10 +66,14 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
                     InnerUtils.checkVersionNumber(version, method);
 
                     String prefix = "/v" + version;
-                    if (!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
-                        prefix = apiVersionProperties.getUriPrefix().trim() + prefix;
+                    if (apiVersionProperties.getUriLocation() == ApiVersionProperties.UriLocation.END) {
+                        info = info.combine(RequestMappingInfo.paths(new String[]{prefix}).build());
+                    } else {
+                        if (!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
+                            prefix = apiVersionProperties.getUriPrefix().trim() + prefix;
+                        }
+                        info = RequestMappingInfo.paths(new String[]{prefix}).build().combine(info);
                     }
-                    info = RequestMappingInfo.paths(new String[]{prefix}).build().combine(info);
                 }
             }
         }

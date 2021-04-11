@@ -23,6 +23,11 @@ public class ApiVersionProperties implements Serializable {
     private String uriPrefix;
 
     /**
+     * URI的位置
+     */
+    private UriLocation uriLocation = UriLocation.BEGIN;
+
+    /**
      * 版本请求头名
      */
     private String header = "X-API-VERSION";
@@ -45,5 +50,9 @@ public class ApiVersionProperties implements Serializable {
          * 请求参数
          */
         PARAM;
+    }
+
+    public enum UriLocation {
+        BEGIN, END
     }
 }
