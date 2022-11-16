@@ -67,12 +67,12 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
 
                     String prefix = "/v" + version;
                     if (apiVersionProperties.getUriLocation() == ApiVersionProperties.UriLocation.END) {
-                        info = info.combine(RequestMappingInfo.paths(new String[]{prefix}).build());
+                        info = info.combine(RequestMappingInfo.paths(prefix).options(getBuilderConfiguration()).build());
                     } else {
-                        if (!StringUtils.isEmpty(apiVersionProperties.getUriPrefix())) {
+                        if (StringUtils.hasText(apiVersionProperties.getUriPrefix())) {
                             prefix = apiVersionProperties.getUriPrefix().trim() + prefix;
                         }
-                        info = RequestMappingInfo.paths(new String[]{prefix}).build().combine(info);
+                        info = RequestMappingInfo.paths(prefix).options(getBuilderConfiguration()).build().combine(info);
                     }
                 }
             }
@@ -83,8 +83,9 @@ public class VersionedRequestMappingHandlerMapping extends RequestMappingHandler
 
     private RequestMappingInfo createRequestMappingInfo(AnnotatedElement element) {
         RequestMapping requestMapping = AnnotatedElementUtils.findMergedAnnotation(element, RequestMapping.class);
-        RequestCondition<?> condition = element instanceof Class ? this.getCustomTypeCondition((Class) element) : this.getCustomMethodCondition((Method) element);
-        return requestMapping != null ? this.createRequestMappingInfo(requestMapping, condition) : null;
+        RequestCondition<?> condition = (element instanceof Class ?
+                getCustomTypeCondition((Class<?>) element) : getCustomMethodCondition((Method) element));
+        return (requestMapping != null ? createRequestMappingInfo(requestMapping, condition) : null);
     }
 
 }
