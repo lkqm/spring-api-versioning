@@ -1,10 +1,10 @@
 package com.github.lkqm.spring.api.version;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.web.servlet.mvc.condition.RequestCondition;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Getter
 public class ApiVersionRequestCondition implements RequestCondition<ApiVersionRequestCondition> {

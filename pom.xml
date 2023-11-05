@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.lkqm</groupId>
-    <artifactId>spring-api-versioning</artifactId>
-    <version>1.4.0</version>
+    <artifactId>springboot3-api-versioning</artifactId>
+    <version>1.0.0</version>
 
     <name>${project.artifactId}</name>
     <description>Simple development of multi-version api based on spring-mvc via @ApiVersion annotation, support for
@@ -30,13 +30,12 @@
         <url>https://github.com/lkqm/spring-api-versioning</url>
       <tag>HEAD</tag>
   </scm>
-
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.version>2.6.13</spring.version>
+        <spring.version>3.1.5</spring.version>
     </properties>
 
     <dependencies>
@@ -69,7 +68,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
